@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rupinder Singh — Senior Product Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@100;200;300;400;600&family=Bebas+Neue&family=DM+Sans:ital,wght@0,200;0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #000000;
+    --deep: #0a0a0a;
+    --surface: #111111;
+    --card: #161616;
+    --border: rgba(255,255,255,0.08);
+    --white: #f5f5f7;
+    --muted: #6e6e73;
+    --accent: #2997ff;
+    --accent2: #30d158;
+    --gold: #ffd60a;
+    --gradient-hero: linear-gradient(180deg, #1a1a2e 0%, #000 60%);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', -apple-system, sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 12px; height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1px solid rgba(41,151,255,0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+
+  /* Nav */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 3rem;
+    height: 52px;
+    background: rgba(0,0,0,0.72);
+    backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.15em;
+    color: var(--white);
+  }
+  .nav-links {
+    display: flex; gap: 2rem; list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta {
+    font-size: 0.78rem;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, #1a2a4a 0%, transparent 70%),
+                radial-gradient(ellipse 60% 40% at 80% 100%, #0d2a1a 0%, transparent 60%),
+                var(--black);
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(41,151,255,0.12);
+    border: 1px solid rgba(41,151,255,0.3);
+    border-radius: 100px;
+    padding: 0.35rem 1rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-tag span { width: 6px; height: 6px; background: var(--accent2); border-radius: 50%; display: inline-block; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+
+  .hero-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 14vw, 13rem);
+    line-height: 0.88;
+    letter-spacing: -0.02em;
+    background: linear-gradient(180deg, #ffffff 0%, #8888aa 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    animation: fadeUp 0.9s 0.1s ease both;
+  }
+  .hero-title {
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    font-weight: 200;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    margin-top: 1.5rem;
+    animation: fadeUp 0.9s 0.2s ease both;
+  }
+  .hero-title strong { color: var(--white); font-weight: 300; }
+
+  .hero-stats {
+    display: flex; gap: 4rem;
+    margin-top: 4rem;
+    animation: fadeUp 0.9s 0.35s ease both;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--white);
+    line-height: 1;
+  }
+  .stat-num span { color: var(--accent); }
+  .stat-label { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; margin-top: 0.3rem; text-transform: uppercase; }
+
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    animation: fadeIn 1.5s 1s ease both;
+  }
+  .scroll-text { font-size: 0.65rem; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; }
+  .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--muted), transparent); animation: scrollAnim 1.5s ease-in-out infinite; }
+  @keyframes scrollAnim { 0%{transform:scaleY(0);transform-origin:top} 50%{transform:scaleY(1);transform-origin:top} 51%{transform:scaleY(1);transform-origin:bottom} 100%{transform:scaleY(0);transform-origin:bottom} }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+  /* Divider */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border) 30%, var(--border) 70%, transparent);
+    margin: 0;
+  }
+
+  /* Sections */
+  section {
+    padding: 7rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 0.7rem;
+  }
+  .section-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 24px; height: 1px;
+    background: var(--accent);
+  }
+
+  .section-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+
+  .section-body {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--muted);
+    max-width: 680px;
+  }
+
+  /* Experience cards */
+  .exp-grid { display: flex; flex-direction: column; gap: 1.5px; margin-top: 4rem; }
+
+  .exp-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+    cursor: default;
+  }
+  .exp-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(41,151,255,0.06) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+  }
+  .exp-card:hover::before { opacity: 1; }
+  .exp-card:hover { border-color: rgba(41,151,255,0.3); transform: translateY(-2px); }
+
+  .exp-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    flex-wrap: wrap; gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .exp-company {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.05em;
+    color: var(--white);
+  }
+  .exp-role {
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    margin-top: 0.2rem;
+  }
+  .exp-period {
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    background: rgba(255,255,255,0.05);
+    padding: 0.3rem 0.8rem;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  .exp-tag-strip {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .exp-tag {
+    font-size: 0.68rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.2rem 0.55rem;
+  }
+
+  .exp-achievements { display: flex; flex-direction: column; gap: 0.9rem; }
+  .achievement {
+    display: flex; gap: 1rem; align-items: flex-start;
+    font-size: 0.88rem;
+    color: #b0b0ba;
+    line-height: 1.6;
+  }
+  .achievement::before {
+    content: '→';
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 0.05rem;
+    font-size: 0.8rem;
+  }
+  .achievement strong { color: var(--white); font-weight: 400; }
+
+  /* Impact numbers strip */
+  .impact-strip {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 4rem 2rem;
+  }
+  .impact-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    text-align: center;
+  }
+  .impact-item {}
+  .impact-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    background: linear-gradient(135deg, var(--white), var(--accent));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1;
+  }
+  .impact-desc {
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    margin-top: 0.5rem;
+    line-height: 1.4;
+  }
+
+  /* Skills */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+  .skill-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.8rem;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .skill-card:hover {
+    border-color: rgba(41,151,255,0.3);
+    background: #1a1a1a;
+  }
+  .skill-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  .skill-card h3 {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--white);
+    letter-spacing: 0.03em;
+    margin-bottom: 0.7rem;
+  }
+  .skill-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .pill {
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 0.2rem 0.6rem;
+  }
+
+  /* Education */
+  .edu-row {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 3rem;
+  }
+  .edu-card {
+    flex: 1; min-width: 260px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+  }
+  .edu-card .degree { font-size: 0.75rem; color: var(--accent); letter-spacing: 0.08em; margin-bottom: 0.5rem; text-transform: uppercase; }
+  .edu-card .inst { font-family: 'Bebas Neue'; font-size: 1.4rem; color: var(--white); letter-spacing: 0.04em; }
+  .edu-card .year { font-size: 0.75rem; color: var(--muted); margin-top: 0.4rem; }
+
+  /* Contact */
+  .contact-section {
+    text-align: center;
+    padding: 8rem 2rem 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 50% 100%, #0a1a3a 0%, transparent 70%);
+  }
+  .contact-section .section-headline { margin-bottom: 1rem; }
+  .contact-links {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    margin-top: 2.5rem; position: relative; z-index: 1;
+  }
+  .contact-link {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    padding: 0.8rem 1.8rem;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: all 0.25s;
+    letter-spacing: 0.04em;
+  }
+  .contact-link.primary {
+    background: var(--accent);
+    color: #000;
+    font-weight: 400;
+  }
+  .contact-link.primary:hover { background: #4aabff; transform: scale(1.03); }
+  .contact-link.secondary {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--white);
+  }
+  .contact-link.secondary:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.05); }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.72rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    letter-spacing: 0.05em;
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Full-width wrapper for impact strip */
+  .full-width { max-width: none !important; }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .hero-stats { gap: 2rem; flex-wrap: wrap; justify-content: center; }
+    .impact-inner { grid-template-columns: repeat(2,1fr); }
+    section { padding: 5rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-logo">RS</div>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#impact">Impact</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+  </ul>
+  <a href="mailto:rupinderq9@gmail.com" class="nav-cta">Contact ↗</a>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-tag"><span></span>Available for new opportunities</div>
+  <h1 class="hero-name">RUPINDER<br>SINGH</h1>
+  <p class="hero-title">Senior Product Manager · <strong>Digital Lending & Fintech Platforms</strong></p>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">7.5<span>+</span></div>
+      <div class="stat-label">Years Experience</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">₹500<span>Cr</span></div>
+      <div class="stat-label">Annual Disbursal</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">3.2<span>M+</span></div>
+      <div class="stat-label">User Journeys</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">3<span>+</span></div>
+      <div class="stat-label">Products in 9 Mo.</div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-text">Scroll</div>
+    <div class="scroll-line"></div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- Summary -->
+<section class="reveal">
+  <div class="section-eyebrow">About</div>
+  <h2 class="section-headline">PRODUCT<br>VISIONARY</h2>
+  <p class="section-body">
+    Expert at architecting 0→1 lending products — from account opening and underwriting to collections — and scaling B2B2C credit flows. Proven ability to translate credit policy into systems, optimise conversion funnels through A/B testing, and own P&amp;L with a data-driven lens across secured and unsecured lending at scale.
+  </p>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Experience -->
+<section id="experience" class="reveal">
+  <div class="section-eyebrow">Work History</div>
+  <h2 class="section-headline">EXPERIENCE<br>THAT SHIPS</h2>
+
+  <div class="exp-grid">
+
+    <!-- Capri Global -->
+    <div class="exp-card" onmousemove="cardGlow(this,event)">
+      <div class="exp-header">
+        <div>
+          <div class="exp-company">CAPRI GLOBAL CAPITAL</div>
+          <div class="exp-role">Senior Product Manager · Gurugram</div>
+        </div>
+        <div class="exp-period">Jun 2024 — Present</div>
+      </div>
+      <div class="exp-tag-strip">
+        <span class="exp-tag">LOS</span><span class="exp-tag">Collections</span><span class="exp-tag">BRE</span><span class="exp-tag">Solar Finance</span><span class="exp-tag">P&L Ownership</span><span class="exp-tag">AI Analytics</span>
+      </div>
+      <div class="exp-achievements">
+        <div class="achievement">Product Owner for Loan Origination & Collections platform — <strong>₹500+ Cr annual disbursal</strong> across personal loans, LAP, HL and Solar Finance.</div>
+        <div class="achievement">Designed digital Account Opening workflow; improved conversion by <strong>11%</strong> and cut time-to-completion from 8 → 7 min via A/B testing.</div>
+        <div class="achievement">Led Collections Command Center used by <strong>1,500+ field collectors</strong> — 30% more accounts covered with zero new headcount.</div>
+        <div class="achievement">Owned end-to-end Solar Loan vertical — delivered <strong>₹67 Cr in 45 days</strong> from zero.</div>
+        <div class="achievement">Product-managed a <strong>3,456-rule Credit Decision Engine</strong>; reduced manual underwriting by 40%, SLA adherence improved 25%.</div>
+        <div class="achievement">Integrated AI call analytics into collections — supervisor effort down 30%, agent conversion up <strong>8%</strong>.</div>
+        <div class="achievement">Shipped <strong>3 major releases in 9 months</strong> with 95%+ quality; monitored 20+ KPIs.</div>
+      </div>
+    </div>
+
+    <!-- HDFC -->
+    <div class="exp-card" onmousemove="cardGlow(this,event)">
+      <div class="exp-header">
+        <div>
+          <div class="exp-company">HDFC LTD (NOW HDFC BANK)</div>
+          <div class="exp-role">Product Manager · New Delhi</div>
+        </div>
+        <div class="exp-period">Oct 2019 — Jun 2024</div>
+      </div>
+      <div class="exp-tag-strip">
+        <span class="exp-tag">Mortgage</span><span class="exp-tag">Underwriting</span><span class="exp-tag">BRE</span><span class="exp-tag">QlikView</span><span class="exp-tag">Auto-Valuation</span>
+      </div>
+      <div class="exp-achievements">
+        <div class="achievement">Launched Builder Rating & Project Appraisal modules; appraisal TAT improved <strong>20%</strong> (12 → 9.5 days), 40+ parallel property appraisals enabled.</div>
+        <div class="achievement">Automated vendor lifecycle; onboarding TAT cut <strong>40%</strong>, SLA adherence 78% → 94%.</div>
+        <div class="achievement">Rolled out Auto-Valuation Engine — <strong>same-day sanction</strong>, CSAT +18 pts, TAT 8 → 3 days.</div>
+        <div class="achievement">BRE-based underwriting (35+ rules) — manual checks reduced 35%, approval consistency <strong>71% → 89%</strong>.</div>
+        <div class="achievement">Led UAT & tech-ops alignment; defect escape rate cut <strong>25%</strong>.</div>
+        <div class="achievement">Built QlikView dashboards for 15+ KPIs informing credit leadership's roadmap and pricing strategy.</div>
+      </div>
+    </div>
+
+    <!-- L&T -->
+    <div class="exp-card" onmousemove="cardGlow(this,event)">
+      <div class="exp-header">
+        <div>
+          <div class="exp-company">L&T CONSTRUCTION</div>
+          <div class="exp-role">Senior Engineer, Planning · Mumbai</div>
+        </div>
+        <div class="exp-period">Jun 2018 — Sep 2019</div>
+      </div>
+      <div class="exp-tag-strip">
+        <span class="exp-tag">Infrastructure</span><span class="exp-tag">Planning</span><span class="exp-tag">Geospatial</span>
+      </div>
+      <div class="exp-achievements">
+        <div class="achievement">Senior Planning Engineer for <strong>Mumbai–Goa highway corridor</strong> (₹800 Cr+ contract); coordinated 50+ contractors.</div>
+        <div class="achievement">Managed progress control using Procube and geospatial monitoring — data-driven execution across on-site and office teams.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Impact Numbers -->
+<div class="impact-strip reveal" id="impact">
+  <div class="impact-inner">
+    <div class="impact-item">
+      <div class="impact-num">₹500Cr+</div>
+      <div class="impact-desc">Annual Disbursal<br>Platform Managed</div>
+    </div>
+    <div class="impact-item">
+      <div class="impact-num">3,456</div>
+      <div class="impact-desc">Credit Rules<br>Engineered in BRE</div>
+    </div>
+    <div class="impact-item">
+      <div class="impact-num">1,500+</div>
+      <div class="impact-desc">Field Users on<br>Collections Platform</div>
+    </div>
+    <div class="impact-item">
+      <div class="impact-num">40%</div>
+      <div class="impact-desc">Reduction in<br>Manual Underwriting</div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- Skills -->
+<section id="skills" class="reveal">
+  <div class="section-eyebrow">Capabilities</div>
+  <h2 class="section-headline">BUILT FOR<br>SCALE</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon" style="background:rgba(41,151,255,0.1);">💳</div>
+      <h3>Lending & Fintech</h3>
+      <div class="skill-pills">
+        <span class="pill">LOS</span><span class="pill">Personal Loans</span><span class="pill">LAP</span><span class="pill">KYC</span><span class="pill">Digital Underwriting</span><span class="pill">Collections</span><span class="pill">Offer Engines</span><span class="pill">BRE</span><span class="pill">Embedded Finance</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon" style="background:rgba(48,209,88,0.1);">📊</div>
+      <h3>Credit & Risk</h3>
+      <div class="skill-pills">
+        <span class="pill">Underwriting Workflows</span><span class="pill">Credit Policy</span><span class="pill">NPA Management</span><span class="pill">Pricing Algorithms</span><span class="pill">Fraud Detection</span><span class="pill">SARFAESI</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon" style="background:rgba(255,214,10,0.1);">🚀</div>
+      <h3>Product & Delivery</h3>
+      <div class="skill-pills">
+        <span class="pill">User Stories</span><span class="pill">Backlog</span><span class="pill">PI Planning</span><span class="pill">UAT</span><span class="pill">BRD</span><span class="pill">Roadmapping</span><span class="pill">RICE/MoSCoW</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon" style="background:rgba(255,55,95,0.1);">📈</div>
+      <h3>Analytics & Data</h3>
+      <div class="skill-pills">
+        <span class="pill">Funnel Analysis</span><span class="pill">A/B Testing</span><span class="pill">Cohorts</span><span class="pill">LTV</span><span class="pill">QlikView</span><span class="pill">Looker</span><span class="pill">SQL</span><span class="pill">Advanced Excel</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon" style="background:rgba(191,90,242,0.1);">🛡️</div>
+      <h3>Compliance</h3>
+      <div class="skill-pills">
+        <span class="pill">KYC/AML</span><span class="pill">PCI DSS</span><span class="pill">RBI Regulations</span><span class="pill">Data Security</span><span class="pill">Regulatory Reporting</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon" style="background:rgba(100,210,255,0.1);">⚙️</div>
+      <h3>Ways of Working</h3>
+      <div class="skill-pills">
+        <span class="pill">Scrum</span><span class="pill">SAFe</span><span class="pill">Rapid Prototyping</span><span class="pill">Stakeholder Mgmt</span><span class="pill">REST APIs</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Education -->
+<section id="education" class="reveal">
+  <div class="section-eyebrow">Education</div>
+  <h2 class="section-headline">FOUNDATIONS</h2>
+  <div class="edu-row">
+    <div class="edu-card">
+      <div class="degree">PGDBA – Finance</div>
+      <div class="inst">Symbiosis Centre for Distance Learning</div>
+      <div class="year">Pune · 2022</div>
+    </div>
+    <div class="edu-card">
+      <div class="degree">B.Tech – Civil Engineering</div>
+      <div class="inst">NIT Jalandhar</div>
+      <div class="year">2018</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Contact -->
+<div class="contact-section reveal">
+  <div class="contact-bg"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="section-eyebrow" style="justify-content:center;">Get in touch</div>
+    <h2 class="section-headline" style="font-size:clamp(3rem,8vw,7rem);">LET'S BUILD<br>SOMETHING.</h2>
+    <p class="section-body" style="margin:0 auto;text-align:center;">Open to senior PM roles in fintech, digital lending, or credit platforms. Based in Gurugram, India.</p>
+    <div class="contact-links">
+      <a href="mailto:rupinderq9@gmail.com" class="contact-link primary">✉ rupinderq9@gmail.com</a>
+      <a href="tel:+919803515742" class="contact-link secondary">📱 +91-9803515742</a>
+      <a href="https://linkedin.com/in/rupinders" class="contact-link secondary" target="_blank">LinkedIn ↗</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2026 Rupinder Singh · Gurugram, India · Product Manager
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
+  });
+  function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) *.12;
+    ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  // Card glow on mouse
+  function cardGlow(el, e) {
+    const rect = el.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    el.style.setProperty('--mx', x + '%');
+    el.style.setProperty('--my', y + '%');
+  }
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        entry.target.style.transitionDelay = (i * 0.05) + 's';
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
